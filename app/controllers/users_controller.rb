@@ -8,6 +8,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def create
     # @user = User.new(params[:user]) #This may use scary params from the internet
     @user = User.new(user_params)
@@ -17,6 +21,16 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       render :new
+    end
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      flash[:success] = "Profile updated"
+      redirect_to @user
+    else
+      render :edit
     end
   end
 
